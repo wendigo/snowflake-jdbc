@@ -330,9 +330,21 @@ public class SnowflakeS3Client implements SnowflakeStorageClient {
                     })
                 .build();
 
+        logger.debug(
+            "downloading from S3. Remote location: "
+                + remoteStorageLocation
+                + ", stage file path: "
+                + stageFilePath
+                + ", local file: "
+                + localFile);
         Download myDownload = tx.download(remoteStorageLocation, stageFilePath, localFile);
 
         // Pull object metadata from S3
+        logger.debug(
+            "get object metadata from remote location: "
+                + remoteStorageLocation
+                + ", and path: "
+                + stageFilePath);
         ObjectMetadata meta = amazonClient.getObjectMetadata(remoteStorageLocation, stageFilePath);
 
         Map<String, String> metaMap = meta.getUserMetadata();
